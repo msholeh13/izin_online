@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('username');
             $table->string('nip')->unique();
-            $table->enum('jabatan', ['Karyawan', 'Kepala Ruangan', 'Kepala Unit', 'Kepala SDM', 'Direktur']);
+            $table->enum('jabatan', ['karyawan', 'kepala_ruangan', 'kepala_unit', 'kepala_SDM', 'direktur', 'superadmin']);
             $table->string('nama_ruang')->nullable();
             $table->string('unit')->nullable();
-            $table->text('alamat');
+            $table->text('alamat')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

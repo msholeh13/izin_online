@@ -4,11 +4,20 @@
       {{-- <div class="bg-white absolute bottom-0 max-w-[640px] w-full mx-auto rounded-t-[120px] h-[68%]"></div> --}}
 
       {{-- header --}}
-      <div class="relative text-white mx-4 pt-10 pb-24 flex gap-4 items-center">
-        <div class="">
-          <img src="{{asset('assets/img/logo.svg')}}" alt="" class=" w-16 min-[400px]:w-20">
+      <div class="relative text-white mx-4 pt-10 pb-24 flex items-center justify-between">
+        <div class="flex gap-4 items-center">
+          <div class="">
+            <img src="{{asset('assets/img/logo.svg')}}" alt="" class=" w-16 min-[400px]:w-20">
+          </div>
+          <p class="font-bold text-2xl min-[400px]:text-3xl">Izin Online App</p>
         </div>
-        <p class="font-bold text-2xl min-[400px]:text-3xl">Izin Online App</p>
+
+        <form action="{{route('logout')}}" method="POST">
+          @csrf
+          <button type="submit">
+            <img src="{{asset('assets/img/logout.svg')}}" alt="" class="w-9">
+          </button>
+        </form>
       </div>
       
       <div class="absolute top-36 z-10">
@@ -16,13 +25,13 @@
         {{-- employee --}}
         <div class=" mx-4 p-4 rounded-3xl border border-opacity-[32%] border-black bg-white">
           <div class="flex flex-col">
-            <div class="text-right text-xs opacity-70">20021312.23.2.233</div>
+            <div class="text-right text-xs opacity-70"> {{Auth::user()->nip}} </div>
             <div class="flex gap-3 items-center">
               <img src="{{asset('assets/img/person.svg')}}" alt="employee image" class="w-20 ">
               <div class="flex flex-col">
-                <p class="opacity-70">Perawat</p>
-                <h1 class="text-lg font-bold">Citra Indah Bunga Ramadhan</h1>
-                <p class="opacity-80 text-xs min-[400px]:text-sm md:text-base">Jl. Bhayangkara No.55, Tipes, Kec. Serengan, Kota Surakarta, Jawa Tengah 57154</p>
+                <p class="opacity-70"> {{Auth::user()->unit}} </p>
+                <h1 class="text-lg font-bold"> {{Auth::user()->nama}} </h1>
+                <p class="opacity-80 text-xs min-[400px]:text-sm md:text-base">{{Auth::user()->alamat}}</p>
               </div>
             </div>
           </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{-- @vite('resources/css/app.css') --}}
-  <link rel="stylesheet" href="{{asset('assets/tailwind/app-Bf224vDG.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/tailwind/app-DsKAYBof.css')}}">
   <link rel="stylesheet" href="{{asset('assets/tailwind/app-Xaw6OIO1.js')}}">
 </head>
 <body class="bg-[#F8F9FE]">

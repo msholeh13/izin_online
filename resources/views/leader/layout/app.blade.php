@@ -54,9 +54,10 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="{{route('login')}}">
-                Logout
-            </a>
+          <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <button type="submit" class="btn">Logout</button>
+          </form>
         </li>
     </ul>
   </nav>

@@ -13,29 +13,37 @@
   <link rel="stylesheet" href="{{ asset('assets/lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/lte/dist/css/adminlte.min.css')}}">
+  <!-- toastr -->
+  <link rel="stylesheet" href="{{asset('assets/lte/plugins/toastr/toastr.min.css')}}">
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="text-center">
-      <img src="https://unsplash.it/400/200" class="img-fluid" alt="">
+      <img src="{{ asset('assets/img/izin-login.png') }}" class="img-fluid" alt="">
     </div>
     <div class="card-body">
-      <form action="#" method="post">
+      <form action="{{route('actionLogin')}}" method="post">
         @csrf
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+            <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Username" value="{{ old('username') }}">
+            @error('username')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" value="admin">
+            @error('password')
+              <div class="invalid-feedback"> {{$message}} </div>
+            @enderror
           </div>
-        
+
         <div class="col-3 mx-auto">
-        <a href="{{route('dashboard')}}" class="btn btn-primary btn-block">Login</a>
-        {{-- <button type="submit" class="btn btn-primary btn-block">Login</button> --}}
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
         </div>
           <!-- /.col -->
       </form>
@@ -52,5 +60,18 @@
 <script src="{{ asset('assets/lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/lte/dist/js/adminlte.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{ asset('assets/lte/plugins/toastr/toastr.min.js') }}"></script>
+
+
+<script>
+  $(document).ready(function() {
+    @if(session('error'))
+      toastr.error("{{ session('error') }}");
+    @endif
+  });
+</script>
+
+
 </body>
 </html>

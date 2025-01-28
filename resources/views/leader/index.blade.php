@@ -17,8 +17,8 @@
               <img class="img-rounded" src="{{asset('assets/lte/dist/img/user7-128x128.jpg')}}" alt="User Avatar">
             </div>
             <div class="m-2">
-              <h3 class="">Nadia Carmichael</h3>
-              <h5 class="">19991212.2.12.00</h5>
+              <h3 class="">{{ Auth::user()->nama }}</h3>
+              <h5 class="">{{ Auth::user()->nip ??  'null' }}</h5>
             </div>
           </div>
         </div>
