@@ -18,8 +18,9 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
-            $table->enum('status', ['true', 'false']);
+            $table->enum('status', ['waiting', 'approved', 'not approved'])->default('waiting');
             $table->text('final_text')->nullable();
+            $table->integer('durasi')->nullable();
             $table->timestamps();
         });
     }

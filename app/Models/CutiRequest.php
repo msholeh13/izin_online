@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cuti_requests extends Model
+class CutiRequest extends Model
 {
-    //
+    protected $guarded = [];
 }

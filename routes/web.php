@@ -18,7 +18,9 @@ Route::middleware('auth')->group(function () {
     // route karyawan
     Route::middleware('CheckJabatan:karyawan')->group(function () {
         Route::get('/employee-dashboard', [Employee::class, 'index'])->name('e-dashboard');
-        Route::get('/form', [Employee::class, 'form_page'])->name('form');
+        Route::get('/form/{user}', [Employee::class, 'form_page'])->name('form');
+        Route::post('/form', [Employee::class, 'upload'])->name('uploadForm');
+        Route::get('/cancel/{id}', [Employee::class, 'cancelCuti'])->name('cancel.cuti');
     });
 
     Route::middleware('CheckJabatan:kepala_ruangan')->group(function () {

@@ -1,5 +1,7 @@
 @extends('leader.layout.app')
 
+@section('title', 'Dashboard')
+
 @section('content')
     
   <!-- Content Wrapper. Contains page content -->

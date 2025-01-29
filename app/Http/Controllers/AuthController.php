@@ -27,6 +27,7 @@ class AuthController extends Controller
 
             switch ($user->jabatan) {
                 case 'karyawan':
+                    // return view('employee.index', compact('user'));
                     return redirect('/employee-dashboard')->with('message', 'suskes masuk');
                 case 'kepala_ruangan':
                 case 'kepala_unit':

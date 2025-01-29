@@ -1,5 +1,7 @@
 @extends('employee.layout.app')
 
+@section('title', 'Dashboard')
+
 @section('content')
       {{-- <div class="bg-white absolute bottom-0 max-w-[640px] w-full mx-auto rounded-t-[120px] h-[68%]"></div> --}}
 
@@ -42,6 +44,43 @@
           <h1 class="font-bold text-lg mb-4">Riwayat Pengajuan</h1>
           <div class="flex flex-col gap-3 mb-32">
 
+            {{-- menampilkan history pengguna --}}
+            @foreach($history as $cuti)
+            <div class="rounded-2xl bg-[#F8F9FE] border p-2">
+                <div class="grid grid-cols-10 gap-2 items-center">
+                    <div class="col-span-6 flex flex-col gap-2 min-[400px]:gap-3">
+                        <div class="">
+                            <h1 class="font-bold text-xs min-[400px]:text-base">{{ $cuti->jenis_cuti }}</h1>
+                            <p class="text-[10px] min-[400px]:text-xs">{{ $cuti->keterangan ?? 'tanpa keterangan' }}</p>
+                            <p class="text-[10px] min-[400px]:text-xs text-[#FF0004]">{{-- jawaban atasan --}}</p>
+                        </div>
+                        <div class="text-[10px] min-[400px]:text-xs opacity-60">
+                            {{ date('d-m-Y', strtotime($cuti->tanggal_mulai)) }} s.d. {{ date('d-m-Y', strtotime($cuti->tanggal_selesai)) }} ({{ $cuti->durasi }} hari)
+                        </div>
+                    </div>
+                    <div class="col-span-2 text-center text-[10px] min-[400px]:text-xs justify-self-center font-bold 
+                        @if($cuti->status == 'waiting') text-[#006FFD]
+                        @elseif($cuti->status == 'approved') text-[#00FF2F]
+                        @else text-[#FF0004] @endif">
+                        {{ ucfirst($cuti->status) }}
+                    </div>
+                    <div class="col-span-2 text-center text-[10px] min-[400px]:text-xs justify-self-center">
+                        @if($cuti->status == 'waiting')
+                            <a href="{{ route('cancel.cuti', $cuti->id) }}">
+                                <img src="{{ asset('assets/icon/trash.svg') }}" alt="Hapus">
+                            </a>
+                        @elseif($cuti->status == 'approved')
+                            <a href="{{-- route('cuti.download', $cuti->id) --}}">
+                                <img src="{{ asset('assets/icon/download.svg') }}" alt="Download">
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            
+            {{--  --}}
+            
             <div class="rounded-2xl bg-[#F8F9FE] border p-2">
               <div class="grid grid-cols-10 gap-2 items-center">
                 <div class="col-span-6  flex flex-col gap-2 min-[400px]:gap-3">
@@ -61,13 +100,14 @@
                 </div>
               </div>
             </div>
+
             <div class="rounded-2xl bg-[#F8F9FE] border p-2">
               <div class="grid grid-cols-10 gap-2 items-center">
                 <div class="col-span-6  flex flex-col gap-2 min-[400px]:gap-3">
                   <div class="">
                     <h1 class="font-bold text-xs min-[400px]:text-base">Jenis Cuti</h1>
                     <p class="text-[10px] min-[400px]:text-xs">Percobaan</p>
-                    <p class="text-[10px] min-[400px]:text-xs text-[#FF0004]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam, eaque!</p>
+                    <p class="text-[10px] min-[400px]:text-xs text-[#FF0004]">jawaban atasan</p>
                   </div>
                   <div class="text-[10px] min-[400px]:text-xs opacity-60">
                     12-12-2024 s.d. 13-12-2024 (2 hari)
@@ -81,6 +121,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="rounded-2xl bg-[#F8F9FE] border p-2">
               <div class="grid grid-cols-10 gap-2 items-center">
                 <div class="col-span-6  flex flex-col gap-2 min-[400px]:gap-3">
@@ -111,6 +152,6 @@
         Button Fixed Full Width
       </button> --}}
       <div class="fixed bottom-0 w-full max-w-[640px] mx-auto border-t border-[#E9E8ED] p-[20px_24px] z-20 bg-white text-white text-center"></div>
-      <a href="{{ route('form') }}" class="fixed bottom-4 w-full max-w-[640px] mx-auto border-t border-[#E9E8ED] p-[20px_24px] z-30 bg-[#006FFD] text-white text-center rounded-[24px] font-bold">Buat Pengajuan Cuti</a>
+      <a href="{{ route('form', ['user' => Auth::user()->id]) }}" class="fixed bottom-4 w-full max-w-[640px] mx-auto border-t border-[#E9E8ED] p-[20px_24px] z-30 bg-[#006FFD] text-white text-center rounded-[24px] font-bold">Buat Pengajuan Cuti</a>
       <div class="relative px-4 pt-32 mt-4 bg-white rounded-tl-[48px] rounded-tr-[48px] h-[68vh]"></div>
   @endsection
