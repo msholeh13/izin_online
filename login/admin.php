@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Admin Login</title>
     <!-- Add Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -14,7 +14,7 @@
             <div class="col-md-6 col-lg-4 mx-auto">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h3 class="text-center mb-4">LOGIN</h3>
+                        <h3 class="text-center mb-4">LOGIN ADMIN</h3>
                         <form action="login.php" method="POST">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
@@ -24,8 +24,9 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            <a href="admin.php">Masuk Sebagai Admin</a>
-                            <br><br>
+                            <a href="index.php">Masuk Sebagai Anggota</a>
+                            <br>
+                            <br>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </div>
