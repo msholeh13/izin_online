@@ -15,7 +15,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h3 class="text-center mb-4">LOGIN</h3>
-                        <form action="login.php" method="POST">
+                        <form action="loginuser.php" method="POST">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="username" required>

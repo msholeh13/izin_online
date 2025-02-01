@@ -13,5 +13,7 @@ function validateForm() {
         return false;
     }
 
-    return true;
+    // You can add more complex validation logic here (e.g., checking for specific patterns)
+
+    return true; // Submit the form if validation passes
 }

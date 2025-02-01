@@ -1,9 +1,11 @@
 <?php
+// login.php
 
+// Database connection details
 $servername = "localhost";
-$username = "root";  
-$password = "";      
-$dbname = "user_db"; 
+$username = "root";  // Your database username
+$password = "";      // Your database password
+$dbname = "db_izinonline"; // Your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
