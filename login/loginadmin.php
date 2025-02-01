@@ -5,7 +5,7 @@
 $servername = "localhost";
 $username = "root";  // Your database username
 $password = "";      // Your database password
-$dbname = "user_db"; // Your database name
+$dbname = "db_izinonline"; // Your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $user['username'];
 
             // Redirect to dashboard
-            header("Location: dashboardadmin.php");
+            header("Location: dashboardkepalaruang.php");
             exit();
         } else {
             echo "Invalid password.";
