@@ -30,6 +30,7 @@ class AuthController extends Controller
                     // return view('employee.index', compact('user'));
                     return redirect('/employee-dashboard')->with('message', 'suskes masuk');
                 case 'kepala_ruangan':
+                    return redirect('/kr-admin')->with('message', 'sukses masuk');
                 case 'kepala_unit':
                 case 'kepala_SDM':
                 case 'direktur':

@@ -3,7 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Main content -->
@@ -26,69 +25,64 @@
         </div>
         {{-- end biodata --}}
         
-        <!-- Small boxes (Stat box) -->
+        @if (Auth::user()->jabatan != 'kepala_ruangan')
+        {{-- row --}}
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-                <p>Cuti Tahunan</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53</h3>
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
 
-                <p>Cuti Sakit</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Cuti Tahunan</span>
+                <span class="info-box-number">100</span>
               </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
 
-                <p>Cuti Bersalin</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Cuti Sakit</span>
+                <span class="info-box-number">410</span>
               </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
 
-                <p>Cuti Menunggu Persalinan</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Cuti Bersalin</span>
+                <span class="info-box-number">64</span>
               </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Cuti Menunggu Persalinan</span>
+                <span class="info-box-number">9</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
         </div>
         <!-- /.row -->
+        @endif
 
         <div class="row">
           <div class="col-12 col-md-6">
@@ -107,22 +101,16 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Andreas</td>
-                    <td>Cuti Sakit
-                    </td>
-                    <td class="text-center">
-                      <a href="{{route('confirm')}}" class="btn btn-primary btn-sm">Balas</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Rara</td>
-                    <td>Cuti Bersalin
-                    </td>
-                    <td class="text-center">
-                      <a href="{{route('confirm')}}" class="btn btn-primary btn-sm">Balas</a>
-                    </td>
-                  </tr>
+                  @foreach ($dataApprovalFlows as $flow)
+                    <tr>
+                      <td>{{ $flow->cutiRequest->user->nama }}</td>
+                      <td>{{ $flow->cutiRequest->jenis_cuti }}</td>
+                      <td class="text-center">
+                        {{-- {{$flow->cutiRequest->id}} --}}
+                        <a href="{{ Auth::user()->jabatan == 'kepala_ruangan' ? route("kr-confirm", ['id' => $flow->cutiRequest->id]) : route("confirm", ['id' => $flow->cutiRequest->id]) }}" class="btn btn-primary btn-sm">Balas</a>
+                      </td>
+                    </tr>
+                  @endforeach
                   
                   </tbody>
                 </table>
@@ -147,25 +135,16 @@
                   </tr>
                   </thead>
                   <tbody>
+                 
+                  @foreach ($confirmedData as $data)
                   <tr>
-                    <td>Budi</td>
-                    <td>02-01-2025
-                    </td>
+                    <td>{{ $data->cutiRequest->user->nama}}</td>
+                    <td>{{ $data->cutiRequest->updated_at }}</td>
                     <td class="text-center">
-                      <a href="{{route('confirm')}}" class="btn btn-primary btn-sm">Lihat</a>
-                      <a href="#" class="btn btn-info btn-sm">Unduh</a>
+                      <a href="{{ Auth::user()->jabatan == 'kepala_ruangan' ? route("kr-confirmed", ['id' => $data->id]) : route("confirmed", ['id' => $data->id]) }}" class="btn btn-primary btn-sm">Lihat</a>
                     </td>
                   </tr>
-                  <tr>
-                    <td>Agus</td>
-                    <td>12-12-2024
-                    </td>
-                    <td class="text-center">
-                      <a href="{{route('confirm')}}" class="btn btn-primary btn-sm">Lihat</a>
-                      <a href="#" class="btn btn-info btn-sm">Unduh</a>
-                    </td>
-                  </tr>
-                  
+                  @endforeach
                   </tbody>
                 </table>
               </div>

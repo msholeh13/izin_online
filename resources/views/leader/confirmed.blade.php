@@ -76,25 +76,25 @@
                                     <div class="form-group">
                                         <div class="d-flex" style="gap: 2em">
                                             <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="customRadio1" name="status" value="approved" {{old('status', 'approved') == 'approved' ? 'checked' : ''}}>
+                                                <input class="custom-control-input" type="radio" id="customRadio1" name="status" value="approved" {{old('status', 'approved') == 'approved' ? 'checked' : ''}} disabled>
                                                 <label for="customRadio1" class="custom-control-label">Approved</label>
                                             </div>
                                             <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="customRadio2" name="status" value="not_approved" {{old('status') == 'not_approved' ? 'checked' : ''}}>
+                                                <input class="custom-control-input" type="radio" id="customRadio2" name="status" value="not_approved" {{old('status') == 'not_approved' ? 'checked' : ''}} disabled>
                                                 <label for="customRadio2" class="custom-control-label">Not Approved</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Alasan</label>
-                                        <textarea name="catatan" class="form-control @error('catatan') is-invalid @enderror" rows="3" placeholder="Berikan balasan jika pengajuan di tolak" ></textarea>
+                                        <textarea name="catatan" class="form-control @error('catatan') is-invalid @enderror" rows="3" placeholder="Berikan balasan jika pengajuan di tolak"  disabled></textarea>
                                         @error('catatan')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="d-flex justify-content-center" style="gap: 2em">
                                         <a href="{{ Auth::user()->jabatan == 'kepala_ruangan' ? route('kr-dashboard') : route('dashboard')}}" class="btn btn-secondary">Batal</a>
-                                        <button type="submit" class="btn btn-primary" >Kirim</button>
+                                        <button type="submit" class="btn btn-primary"  disabled>Kirim</button>
                                     </div>
                                 </form>
                             </div>

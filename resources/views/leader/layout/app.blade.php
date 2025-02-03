@@ -150,9 +150,10 @@
 <!-- overlayScrollbars -->
 <script src="{{asset('assets/lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="{{asset('assets/lte/dist/js/adminlte.js')}}"></script>
+<script src="{{asset('assets/lte/dist/js/adminlte.min.js')}}"></script>
+
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('assets/lte/dist/js/demo.js')}}"></script>
+{{-- <script src="{{asset('assets/lte/dist/js/demo.js')}}"></script> --}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('assets/lte/dist/js/pages/dashboard.js')}}"></script>
 
@@ -161,15 +162,6 @@
     $(".data-table").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    // $('#example2').DataTable({
-    //   "paging": true,
-    //   "lengthChange": false,
-    //   "searching": false,
-    //   "ordering": true,
-    //   "info": true,
-    //   "autoWidth": false,
-    //   "responsive": true,
-    // });
   });
 </script>
 </body>

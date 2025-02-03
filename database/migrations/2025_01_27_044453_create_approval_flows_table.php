@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('cuti_request_id');
-            $table->foreign('cuti_request_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('cuti_request_id')->references('id')->on('cuti_requests')->onDelete('cascade');
 
             $table->unsignedBigInteger('approver_id');
-            $table->foreign('approver_id')->references('id')->on('cuti_requests')->onDelete('cascade');
+            $table->foreign('approver_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->enum('level_approval', ['kepala_ruang', 'kepala_unit', 'kepala_sdm', 'direktur']);
-            $table->enum('status', ['waiting', 'approved', 'not approved'])->default('waiting');
-            $table->text('catatan');
+            $table->enum('level_approval', ['kepala_ruangan', 'kepala_unit', 'kepala_sdm', 'direktur']);
+            $table->enum('status', ['waiting', 'approved', 'not_approved'])->default('waiting');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }

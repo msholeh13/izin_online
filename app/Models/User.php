@@ -47,4 +47,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function cutiRequests()
+    {
+        return $this->hasMany(CutiRequest::class);
+    }
+
+    public function approvals()
+    {
+        return $this->hasMany(ApprovalFlow::class, 'approver_id');
+    }
 }

@@ -13,12 +13,17 @@ return new class extends Migration
     {
         Schema::create('cuti_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+
+            // $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('jenis_cuti', 100);
             $table->text('keterangan')->nullable();
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
-            $table->enum('status', ['waiting', 'approved', 'not approved'])->default('waiting');
+            $table->enum('status', ['waiting', 'approved', 'not_approved'])->default('waiting');
             $table->text('final_text')->nullable();
             $table->integer('durasi')->nullable();
             $table->timestamps();
