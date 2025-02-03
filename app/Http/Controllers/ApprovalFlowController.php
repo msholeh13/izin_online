@@ -10,39 +10,39 @@ use App\Http\Controllers\Controller;
 
 class ApprovalFlowController extends Controller
 {
-    public function approve(Request $request, $approvalId)
-    {
-        $approval = ApprovalFlow::findOrFail($approvalId);
-        $approval->status = $request->status;
-        $approval->catatan = $request->catatan;
-        $approval->save();
+    // public function approve(Request $request, $approvalId)
+    // {
+    //     $approval = ApprovalFlow::findOrFail($approvalId);
+    //     $approval->status = $request->status;
+    //     $approval->catatan = $request->catatan;
+    //     $approval->save();
 
-        if ($request->status == 'approved') {
-            // Tentukan siapa level selanjutnya
-            $nextLevel = $this->getNextLevel($approval->level_approval);
+    //     if ($request->status == 'approved') {
+    //         // Tentukan siapa level selanjutnya
+    //         $nextLevel = $this->getNextLevel($approval->level_approval);
 
-            if ($nextLevel) {
-                $nextApprover = $this->findNextApprover($approval->cutiRequest, $nextLevel);
+    //         if ($nextLevel) {
+    //             $nextApprover = $this->findNextApprover($approval->cutiRequest, $nextLevel);
 
-                if ($nextApprover) {
-                    ApprovalFlow::create([
-                        'cuti_request_id' => $approval->cuti_request_id,
-                        'approver_id' => $nextApprover->id,
-                        'level_approval' => $nextLevel,
-                        'status' => 'waiting',
-                    ]);
-                }
-            } else {
-                // Jika tidak ada level selanjutnya, set cuti menjadi approved
-                $approval->cutiRequest->update(['status' => 'approved']);
-            }
-        } else {
-            // Jika ditolak, set cuti menjadi not approved
-            $approval->cutiRequest->update(['status' => 'not_approved']);
-        }
+    //             if ($nextApprover) {
+    //                 ApprovalFlow::create([
+    //                     'cuti_request_id' => $approval->cuti_request_id,
+    //                     'approver_id' => $nextApprover->id,
+    //                     'level_approval' => $nextLevel,
+    //                     'status' => 'waiting',
+    //                 ]);
+    //             }
+    //         } else {
+    //             // Jika tidak ada level selanjutnya, set cuti menjadi approved
+    //             $approval->cutiRequest->update(['status' => 'approved']);
+    //         }
+    //     } else {
+    //         // Jika ditolak, set cuti menjadi not approved
+    //         $approval->cutiRequest->update(['status' => 'not_approved']);
+    //     }
 
-        return redirect()->back()->with('success', 'Persetujuan berhasil diproses.');
-    }
+    //     return redirect()->back()->with('success', 'Persetujuan berhasil diproses.');
+    // }
 
     private function getNextLevel($currentLevel)
     {
@@ -68,9 +68,15 @@ class ApprovalFlowController extends Controller
         }
     }
 
-    public function submitPengajuan(Request $request, $approvalId)
+    public function submitPengajuan($cutiRequestId, $approverId, Request $request)
     {
-        $approval = ApprovalFlow::findOrFail($approvalId);
+        // $approval = ApprovalFlow::findOrFail($approvalId);
+        $approval = ApprovalFlow::where([
+            'cuti_request_id' => $cutiRequestId,
+            'approver_id' => $approverId,
+        ])->with(['cutiRequest', 'cutiRequest.user'])
+            ->first();
+        // dd($approval);
 
         $approval->status = $request->status == 'approved' ? 'approved' : 'not_approved';
         $approval->catatan = $request->catatan;
@@ -79,6 +85,8 @@ class ApprovalFlowController extends Controller
 
         if ($request->status == 'approved') {
             $nextLevel = $this->getNextLevel($approval->level_approval);
+
+            // dd($nextLevel);
 
             if ($nextLevel) {
                 $nextApprover = $this->findNextApprover($approval->cutiRequest, $nextLevel);
@@ -110,6 +118,12 @@ class ApprovalFlowController extends Controller
             ]);
             return back()->withInput();
         }
-        return auth()->user()->jabatan == 'kepala_ruangan' ? redirect('kr-admin') : redirect('admin');
+        return match (auth()->user()->jabatan) {
+            'kepala_ruangan' => redirect('kr-admin'),
+            'kepala_unit' => redirect('ku-admin'),
+            'kepala_SDM' => redirect('ks-admin'),
+            'direktur' => redirect('d-admin'),
+            default => redirect('admin')
+        };
     }
 }

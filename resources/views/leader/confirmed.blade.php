@@ -71,7 +71,7 @@
                                 <h3 class="card-title">Keterangan</h3>
                             </div>
                             <div class="card-body">
-                                <form action="{{route('kr-submit', ['id' => $user->cutiRequest->id])}}" method="POST">
+                                <form action="" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <div class="d-flex" style="gap: 2em">

@@ -27,14 +27,15 @@ class AuthController extends Controller
 
             switch ($user->jabatan) {
                 case 'karyawan':
-                    // return view('employee.index', compact('user'));
                     return redirect('/employee-dashboard')->with('message', 'suskes masuk');
                 case 'kepala_ruangan':
                     return redirect('/kr-admin')->with('message', 'sukses masuk');
                 case 'kepala_unit':
+                    return redirect('/ku-admin')->with('message', 'sukses masuk');
                 case 'kepala_SDM':
+                    return redirect('/ks-admin')->with('message', 'sukses masuk');
                 case 'direktur':
-                    return redirect('/admin')->with('message', 'sukses masuk');
+                    return redirect('/d-admin')->with('message', 'sukses masuk');
                 default:
                     Auth::logout();
                     return redirect('/login')->with('error', 'gagal, ada yang salah')->withInput();

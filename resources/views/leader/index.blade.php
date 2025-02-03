@@ -3,7 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-  <!-- Content Wrapper. Contains page content -->
+
+      <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Main content -->
     <div class="content-header"></div>
@@ -34,7 +35,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Cuti Tahunan</span>
-                <span class="info-box-number">100</span>
+                <span class="info-box-number">{{ $jumlahPengajuan['tahunan'] }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -47,7 +48,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Cuti Sakit</span>
-                <span class="info-box-number">410</span>
+                <span class="info-box-number">{{ $jumlahPengajuan['sakit'] }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -60,7 +61,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Cuti Bersalin</span>
-                <span class="info-box-number">64</span>
+                <span class="info-box-number">{{ $jumlahPengajuan['bersalin'] }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -73,7 +74,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Cuti Menunggu Persalinan</span>
-                <span class="info-box-number">9</span>
+                <span class="info-box-number">{{ $jumlahPengajuan['menunggu persalinan'] }}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -107,7 +108,13 @@
                       <td>{{ $flow->cutiRequest->jenis_cuti }}</td>
                       <td class="text-center">
                         {{-- {{$flow->cutiRequest->id}} --}}
-                        <a href="{{ Auth::user()->jabatan == 'kepala_ruangan' ? route("kr-confirm", ['id' => $flow->cutiRequest->id]) : route("confirm", ['id' => $flow->cutiRequest->id]) }}" class="btn btn-primary btn-sm">Balas</a>
+                        <a href="{{ 
+                          Auth::user()->jabatan == 'kepala_ruangan' ? route('kr-confirm', ['id' => $flow->cutiRequest->id]) : 
+                          (Auth::user()->jabatan == 'kepala_unit' ? route('ku-confirm', ['id' => $flow->cutiRequest->id]) :
+                          (Auth::user()->jabatan == 'kepala_SDM' ? route('ks-confirm', ['id' => $flow->cutiRequest->id]) :
+                          (Auth::user()->jabatan == 'direktur' ? route('d-confirm', ['id' => $flow->cutiRequest->id]) : '#')))
+                      }}" class="btn btn-primary btn-sm">Balas</a>
+                      
                       </td>
                     </tr>
                   @endforeach
@@ -141,7 +148,13 @@
                     <td>{{ $data->cutiRequest->user->nama}}</td>
                     <td>{{ $data->cutiRequest->updated_at }}</td>
                     <td class="text-center">
-                      <a href="{{ Auth::user()->jabatan == 'kepala_ruangan' ? route("kr-confirmed", ['id' => $data->id]) : route("confirmed", ['id' => $data->id]) }}" class="btn btn-primary btn-sm">Lihat</a>
+                      <a href="{{ 
+                        Auth::user()->jabatan == 'kepala_ruangan' ? route('kr-confirmed', ['id' => $data->id]) : 
+                        (Auth::user()->jabatan == 'kepala_unit' ? route('ku-confirmed', ['id' => $data->id]) :
+                        (Auth::user()->jabatan == 'kepala_SDM' ? route('ks-confirmed', ['id' => $data->id]) :
+                        (Auth::user()->jabatan == 'direktur' ? route('d-confirmed', ['id' => $data->id]) : '#')))
+                    }}" class="btn btn-primary btn-sm">Lihat</a>
+                    
                     </td>
                   </tr>
                   @endforeach

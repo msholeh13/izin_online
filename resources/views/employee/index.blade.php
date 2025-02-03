@@ -52,7 +52,7 @@
                         <div class="">
                             <h1 class="font-bold text-xs min-[400px]:text-base">{{ $cuti->jenis_cuti }}</h1>
                             <p class="text-[10px] min-[400px]:text-xs">{{ $cuti->keterangan ?? 'tanpa keterangan' }}</p>
-                            <p class="text-[10px] min-[400px]:text-xs text-[#FF0004]">{{-- jawaban atasan --}}</p>
+                            <p class="text-[10px] min-[400px]:text-xs text-[#FF0004]">{{ $cuti->final_text }}</p>
                         </div>
                         <div class="text-[10px] min-[400px]:text-xs opacity-60">
                             {{ date('d-m-Y', strtotime($cuti->tanggal_mulai)) }} s.d. {{ date('d-m-Y', strtotime($cuti->tanggal_selesai)) }} ({{ $cuti->durasi }} hari)
@@ -81,7 +81,7 @@
             
             {{--  --}}
             
-            <div class="rounded-2xl bg-[#F8F9FE] border p-2">
+            {{-- <div class="rounded-2xl bg-[#F8F9FE] border p-2">
               <div class="grid grid-cols-10 gap-2 items-center">
                 <div class="col-span-6  flex flex-col gap-2 min-[400px]:gap-3">
                   <div class="">
@@ -99,9 +99,9 @@
                   </a>
                 </div>
               </div>
-            </div>
+            </div> --}}
 
-            <div class="rounded-2xl bg-[#F8F9FE] border p-2">
+            {{-- <div class="rounded-2xl bg-[#F8F9FE] border p-2">
               <div class="grid grid-cols-10 gap-2 items-center">
                 <div class="col-span-6  flex flex-col gap-2 min-[400px]:gap-3">
                   <div class="">
@@ -115,14 +115,11 @@
                 </div>
                 <div class="col-span-2  text-center text-[10px] min-[400px]:text-xs justify-self-center font-bold text-[#FF0004]">Not Approved</div>
                 <div class="col-span-2  text-center text-[10px] min-[400px]:text-xs justify-self-center">
-                  {{-- <a href="#">
-                    <img src="{{asset('assets/icon/trash.svg')}}" alt="Hapus">
-                  </a> --}}
                 </div>
               </div>
-            </div>
+            </div> --}}
             
-            <div class="rounded-2xl bg-[#F8F9FE] border p-2">
+            {{-- <div class="rounded-2xl bg-[#F8F9FE] border p-2">
               <div class="grid grid-cols-10 gap-2 items-center">
                 <div class="col-span-6  flex flex-col gap-2 min-[400px]:gap-3">
                   <div class="">
@@ -140,7 +137,8 @@
                   </a>
                 </div>
               </div>
-            </div>
+            </div> --}}
+            
           </div>
           
         </div>

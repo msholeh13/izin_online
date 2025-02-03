@@ -4,7 +4,7 @@
 
 @section('content')
 
-{{-- @dd($user) --}}
+{{-- @dd($latestApproval) --}}
 
     <div class="content-wrapper">
         <div class="content-header"></div>
@@ -21,42 +21,42 @@
                             <div class="card-body">
                                 <div class="form-group">
                                 <label for="name">Nama</label>
-                                <input type="text" class="form-control" id="name" value="{{ $user->cutiRequest->user->nama }}" disabled>
+                                <input type="text" class="form-control" id="name" value="{{ $user->user->nama }}" disabled>
                                 </div>
                                 <div class="form-group">
                                 <label for="nip">NIP</label>
-                                <input type="text" class="form-control" id="nip" value="{{ $user->cutiRequest->user->nip }}" disabled>
+                                <input type="text" class="form-control" id="nip" value="{{ $user->user->nip }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <textarea class="form-control" rows="3" disabled>{{ $user->cutiRequest->user->alamat }}</textarea>
+                                    <textarea class="form-control" rows="3" disabled>{{ $user->user->alamat }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="jabatan">Jabatan</label>
-                                    <input type="text" class="form-control" id="jabatan" value="{{ $user->cutiRequest->user->jabatan }}" disabled>
+                                    <input type="text" class="form-control" id="jabatan" value="{{ $user->user->jabatan }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="unit">Unit</label>
-                                    <input type="text" class="form-control" id="unit" value="{{ $user->cutiRequest->user->unit }}" disabled>
+                                    <input type="text" class="form-control" id="unit" value="{{ $user->user->unit }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="jenis_cuti">Jenis Cuti</label>
-                                    <input type="text" class="form-control" id="jenis_cuti" value="{{ $user->cutiRequest->jenis_cuti }}" disabled>
+                                    <input type="text" class="form-control" id="jenis_cuti" value="{{ $user->jenis_cuti }}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label>Keterangan (Opsional)</label>
-                                    <textarea class="form-control" rows="3" disabled>{{ $user->cutiRequest->keterangan }}</textarea>
+                                    <textarea class="form-control" rows="3" disabled>{{ $user->keterangan }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="tanggal_awal" class="">Tanggal Awal</label>
                                     <div class="">
-                                        <input type="date" name="tanggal_awal" id="tanggal_awal" autocomplete="" class="form-control" value="{{ $user->cutiRequest->tanggal_mulai }}" disabled>
+                                        <input type="date" name="tanggal_awal" id="tanggal_awal" autocomplete="" class="form-control" value="{{ $user->tanggal_mulai }}" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tanggal_akhir" class="">Tanggal Awal</label>
                                     <div class="">
-                                        <input type="date" name="tanggal_akhir" id="tanggal_akhir" autocomplete="" class="form-control" value="{{ $user->cutiRequest->tanggal_selesai }}" disabled>
+                                        <input type="date" name="tanggal_akhir" id="tanggal_akhir" autocomplete="" class="form-control" value="{{ $user->tanggal_selesai }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,18 @@
                                 <h3 class="card-title">Keterangan</h3>
                             </div>
                             <div class="card-body">
-                                <form action="{{route('kr-submit', ['id' => $user->cutiRequest->id])}}" method="POST">
+                                @php
+                                $submitRoute = match (Auth::user()->jabatan) {
+                                    'kepala_ruangan' => route('kr-submit', ['cutiRequestId' => $user->id, 'approvalId' => $latestApproval->approver_id]),
+                                    'kepala_unit' => route('ku-submit', ['cutiRequestId' => $user->id, 'approvalId' => $latestApproval->approver_id]),
+                                    'kepala_SDM' => route('ks-submit', ['cutiRequestId' => $user->id, 'approvalId' => $latestApproval->approver_id]),
+                                    'direktur' => route('d-submit', ['cutiRequestId' => $user->id, 'approvalId' => $latestApproval->approver_id]),
+                                    default => '#'
+                                };
+                                @endphp
+
+                                <form action="{{ $submitRoute }}" method="POST">
+
                                     @csrf
                                     <div class="form-group">
                                         <div class="d-flex" style="gap: 2em">
@@ -93,7 +104,19 @@
                                         @enderror
                                     </div>
                                     <div class="d-flex justify-content-center" style="gap: 2em">
-                                        <a href="{{ Auth::user()->jabatan == 'kepala_ruangan' ? route('kr-dashboard') : route('dashboard')}}" class="btn btn-secondary">Batal</a>
+                                        @php
+                                        $dashboardRoute = match (Auth::user()->jabatan) {
+                                            'kepala_ruangan' => route('kr-dashboard'),
+                                            'kepala_unit' => route('ku-dashboard'),
+                                            'kepala_SDM' => route('ks-dashboard'),
+                                            'direktur' => route('d-dashboard'),
+                                            default => '#'
+                                        };
+                                        @endphp
+                                    
+                                        <a href="{{ $dashboardRoute }}" class="btn btn-secondary">Batal</a>
+                                    
+                                        
                                         <button type="submit" class="btn btn-primary" >Kirim</button>
                                     </div>
                                 </form>

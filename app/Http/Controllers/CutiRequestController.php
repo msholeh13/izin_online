@@ -30,9 +30,10 @@ class CutiRequestController extends Controller
 
     public function cancelCuti($id)
     {
-        $data = CutiRequest::findOrFail($id);
+        $data = CutiRequest::with('approvals')->findOrFail($id);
         if ($data) {
-            $data->delete();
+            $data->approvals()->delete(); // Hapus approval_flows terkait
+            $data->delete(); // Hapus cuti_requests
         }
         return redirect('/employee-dashboard');
     }
